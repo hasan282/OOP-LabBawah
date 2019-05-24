@@ -6,10 +6,13 @@ import javax.swing.table.DefaultTableModel;
 public class FormBatik extends javax.swing.JFrame {
     
     DefaultTableModel mdl = new DefaultTableModel();
+    String PrimaryKey;
 
     public FormBatik() {
         initComponents();
-        tampil_tabel();
+        tampil_tabel_dbase();
+        btn_saveedit.setVisible(false);
+        btn_cancel.setVisible(false);
     }
 
     /**
@@ -65,6 +68,11 @@ public class FormBatik extends javax.swing.JFrame {
         tabel_form = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         btn_simpan = new javax.swing.JButton();
+        btn_edit = new javax.swing.JButton();
+        btn_delete = new javax.swing.JButton();
+        btn_saveedit = new javax.swing.JButton();
+        btn_cancel = new javax.swing.JButton();
+        btn_close = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -376,6 +384,41 @@ public class FormBatik extends javax.swing.JFrame {
             }
         });
 
+        btn_edit.setText("Edit");
+        btn_edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_editActionPerformed(evt);
+            }
+        });
+
+        btn_delete.setText("Delete");
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
+
+        btn_saveedit.setText("Simpan Perubahan");
+        btn_saveedit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_saveeditActionPerformed(evt);
+            }
+        });
+
+        btn_cancel.setText("Cancel");
+        btn_cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelActionPerformed(evt);
+            }
+        });
+
+        btn_close.setText("Close");
+        btn_close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_closeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -383,13 +426,29 @@ public class FormBatik extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btn_simpan)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_edit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_delete)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_saveedit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_cancel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_close)
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btn_simpan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_close, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_simpan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_edit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_saveedit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_cancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -444,14 +503,114 @@ public class FormBatik extends javax.swing.JFrame {
             "Biaya Admin",
             "Total"
         };
-        
         mdl.setColumnIdentifiers(kolomz);
         tabel_form.setModel(mdl);
     }
 
+    private void tampil_tabel_dbase(){
+        DefaultTableModel mdlz = new DefaultTableModel();
+        mdlz.addColumn("No Kirim");
+        mdlz.addColumn("Nama Pembeli");
+        mdlz.addColumn("Tanggal");
+        mdlz.addColumn("Jenis Batik");
+        mdlz.addColumn("Jumlah Kodi");
+        mdlz.addColumn("Total Harga");
+        mdlz.addColumn("Biaya Kirim");
+        mdlz.addColumn("Biaya Admin");
+        mdlz.addColumn("Total");
+        try {
+            String sql = "select * from batik";
+            java.sql.Connection conn = ConnectTools.connect("ti412");
+            java.sql.ResultSet rs = conn.createStatement().executeQuery(sql);
+            while (rs.next()) {
+                String[] dataField = {
+                    rs.getString("no_kirim"),
+                    rs.getString("nama"),
+                    rs.getString("tanggal"),
+                    rs.getString("jenis_batik"),
+                    rs.getString("kodi"),
+                    rs.getString("harga"),
+                    rs.getString("kirim"),
+                    rs.getString("admin"),
+                    rs.getString("total")
+                };
+                mdlz.addRow(dataField);
+            }
+            tabel_form.setModel(mdlz);
+            tabel_form.setRowSelectionInterval(0, 0);
+        } catch (Exception e) {}
+    }
+
+    private void isi_tabel_dbase(){
+        String eSQieL = "INSERT INTO batik VALUES ('" +
+                no_kirim.getText().toString() + "','" +
+                nama_pembeli.getText().toString() + "','" +
+                tanggal_kirim.getText().toString() + "','" +
+                motif_batik.getText().toString() + "','" +
+                jumlah_kodi.getText().toString() + "','" +
+                harga_total.getText().toString() + "','" +
+                biaya_kirim.getText().toString() + "','" +
+                biaya_admin.getText().toString() + "','" +
+                total_biaya.getText().toString() + "')";
+        try{
+            java.sql.Connection conz = ConnectTools.connect("ti412");
+            java.sql.PreparedStatement pst = conz.prepareStatement(eSQieL);
+            pst.execute();
+            JOptionPane.showMessageDialog(null,"Data Berhasil Ditambahkan");
+        } catch (Exception e){JOptionPane.showMessageDialog(null,"Data Gagal Diinput"+e.getMessage());}
+    }
+
+    private void isi_form(int row){
+        PrimaryKey = tabel_form.getModel().getValueAt(row,0).toString();
+        
+        no_kirim.setText(tabel_form.getModel().getValueAt(row,0).toString());
+        nama_pembeli.setText(tabel_form.getModel().getValueAt(row,1).toString());
+        tanggal_kirim.setText(tabel_form.getModel().getValueAt(row,2).toString());
+        jumlah_kodi.setText(tabel_form.getModel().getValueAt(row,4).toString());
+        
+        int kode = 0;
+        String jenisbatik = tabel_form.getModel().getValueAt(row,3).toString();
+        if(jenisbatik.equals("Kawung"))kode = 1;
+        if(jenisbatik.equals("Parang"))kode = 2;
+        if(jenisbatik.equals("Truntum"))kode = 3;
+        if(jenisbatik.equals("Sido Mukti"))kode = 4;
+        kode_batik.setSelectedIndex(kode);
+        
+        int admin = Integer.parseInt(tabel_form.getModel().getValueAt(row,7).toString());
+        int harga = Integer.parseInt(harga_total.getText().toString());
+        int persen = 100*admin/harga;
+        int index = 0;
+        if(persen == 5)index = 1;
+        if(persen == 10)index = 2;
+        if(persen == 15)index = 3;
+        prs_persen.setSelectedIndex(index);
+        
+        biaya_admin.setText(tabel_form.getModel().getValueAt(row,7).toString());
+        total_biaya.setText(tabel_form.getModel().getValueAt(row,8).toString());
+    }
+
+    private void edit_tabel(){
+        String sqlEdit = "UPDATE batik SET " +
+                "no_kirim='" + no_kirim.getText().toString() + "', " +
+                "nama='" + nama_pembeli.getText().toString() + "', " +
+                "tanggal='" + tanggal_kirim.getText().toString() + "', " +
+                "jenis_batik='" + motif_batik.getText().toString() + "', " +
+                "kodi='" + jumlah_kodi.getText().toString() + "', " +
+                "harga='" + harga_total.getText().toString() + "', " +
+                "kirim='" + biaya_kirim.getText().toString() + "', " +
+                "admin='" + biaya_admin.getText().toString() + "', " +
+                "total='" + total_biaya.getText().toString() + "' " +
+                "WHERE no_kirim='" + PrimaryKey + "'";
+        try{
+            java.sql.Connection conz = ConnectTools.connect("ti412");
+            java.sql.PreparedStatement pst = conz.prepareStatement(sqlEdit);
+            pst.execute();
+            JOptionPane.showMessageDialog(null,"Data Berhasil Diubah");
+        } catch (Exception e){JOptionPane.showMessageDialog(null,"Data Gagal Diubah"+e.getMessage());}
+    }
+
     private void isi_tabel(){
         Object[] rowz = new Object[9];
-        
         rowz[0] = no_kirim.getText().toString();
         rowz[1] = nama_pembeli.getText().toString();
         rowz[2] = tanggal_kirim.getText().toString();
@@ -461,7 +620,6 @@ public class FormBatik extends javax.swing.JFrame {
         rowz[6] = biaya_kirim.getText().toString();
         rowz[7] = biaya_admin.getText().toString();
         rowz[8] = total_biaya.getText().toString();
-        
         mdl.addRow(rowz);
     }
 
@@ -624,9 +782,80 @@ public class FormBatik extends javax.swing.JFrame {
             return;
         }
         
-        isi_tabel();
+        isi_tabel_dbase();
         ClearInputs();
+        tampil_tabel_dbase();
     }//GEN-LAST:event_btn_simpanActionPerformed
+
+    private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
+        // TODO add your handling code here:
+        btn_simpan.setVisible(false);
+        btn_edit.setVisible(false);
+        btn_delete.setVisible(false);
+        btn_saveedit.setVisible(true);
+        btn_cancel.setVisible(true);
+        
+        isi_form(tabel_form.getSelectedRow());
+    }//GEN-LAST:event_btn_editActionPerformed
+
+    private void btn_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed
+        // TODO add your handling code here:
+        ClearInputs();
+        btn_saveedit.setVisible(false);
+        btn_cancel.setVisible(false);
+        btn_simpan.setVisible(true);
+        btn_edit.setVisible(true);
+        btn_delete.setVisible(true);
+    }//GEN-LAST:event_btn_cancelActionPerformed
+
+    private void btn_saveeditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveeditActionPerformed
+        // TODO add your handling code here:
+        if(no_kirim.getText().equals("") || nama_pembeli.getText().equals("") || tanggal_kirim.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Data yang Diisi Belum Lengkap");
+            return;
+        }
+        if(total_biaya.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Hitung Total Biaya Terlebih Dahulu");
+            return;
+        }
+        int PilihanEdit = JOptionPane.showConfirmDialog(null, "Simpan Perubahan Pada Data?", null, JOptionPane.YES_NO_OPTION);
+        if(PilihanEdit == JOptionPane.YES_OPTION){
+            btn_saveedit.setVisible(false);
+            btn_cancel.setVisible(false);
+            btn_simpan.setVisible(true);
+            btn_edit.setVisible(true);
+            btn_delete.setVisible(true);
+            edit_tabel();
+            ClearInputs();
+            tampil_tabel_dbase();
+        }else{
+            setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        }
+    }//GEN-LAST:event_btn_saveeditActionPerformed
+
+    private void btn_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_closeActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_btn_closeActionPerformed
+
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+        // TODO add your handling code here:
+        int baris = tabel_form.getSelectedRow();
+        PrimaryKey = tabel_form.getModel().getValueAt(baris,0).toString();
+        String sqlDelete = "DELETE FROM batik WHERE no_kirim='" + PrimaryKey + "'";
+        int PilihanDelete = JOptionPane.showConfirmDialog(null, "Hapus Data yang Sudah Tersimpan?", null, JOptionPane.YES_NO_OPTION);
+        if(PilihanDelete == JOptionPane.YES_OPTION){
+            try{
+                java.sql.Connection conz = ConnectTools.connect("ti412");
+                java.sql.PreparedStatement pst = conz.prepareStatement(sqlDelete);
+                pst.execute();
+                JOptionPane.showMessageDialog(null,"Data Telah Dihapus");
+            } catch (Exception e){JOptionPane.showMessageDialog(null,"Data Tidak Dapat Dihapus"+e.getMessage());}
+        tampil_tabel_dbase();
+        }else{
+            setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        }
+    }//GEN-LAST:event_btn_deleteActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -662,7 +891,12 @@ public class FormBatik extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField biaya_admin;
     private javax.swing.JTextField biaya_kirim;
+    private javax.swing.JButton btn_cancel;
+    private javax.swing.JButton btn_close;
+    private javax.swing.JButton btn_delete;
+    private javax.swing.JButton btn_edit;
     private javax.swing.JButton btn_hitung;
+    private javax.swing.JButton btn_saveedit;
     private javax.swing.JButton btn_simpan;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField harga_perkode;
