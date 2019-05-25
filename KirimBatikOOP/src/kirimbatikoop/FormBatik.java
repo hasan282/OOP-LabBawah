@@ -7,6 +7,8 @@ public class FormBatik extends javax.swing.JFrame {
     
     DefaultTableModel mdl = new DefaultTableModel();
     String PrimaryKey;
+    String MainDatabase = "ti412";
+    String DbsTable = "batik";
 
     public FormBatik() {
         initComponents();
@@ -72,7 +74,7 @@ public class FormBatik extends javax.swing.JFrame {
         btn_delete = new javax.swing.JButton();
         btn_saveedit = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
-        btn_close = new javax.swing.JButton();
+        btn_logout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -412,10 +414,10 @@ public class FormBatik extends javax.swing.JFrame {
             }
         });
 
-        btn_close.setText("Close");
-        btn_close.addActionListener(new java.awt.event.ActionListener() {
+        btn_logout.setText("Logout");
+        btn_logout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_closeActionPerformed(evt);
+                btn_logoutActionPerformed(evt);
             }
         });
 
@@ -435,7 +437,7 @@ public class FormBatik extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_cancel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_close)
+                .addComponent(btn_logout)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -443,7 +445,7 @@ public class FormBatik extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_close, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_simpan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_edit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -519,8 +521,8 @@ public class FormBatik extends javax.swing.JFrame {
         mdlz.addColumn("Biaya Admin");
         mdlz.addColumn("Total");
         try {
-            String sql = "select * from batik";
-            java.sql.Connection conn = ConnectTools.connect("ti412");
+            String sql = "SELECT * FROM " + DbsTable;
+            java.sql.Connection conn = ConnectTools.connect(MainDatabase);
             java.sql.ResultSet rs = conn.createStatement().executeQuery(sql);
             while (rs.next()) {
                 String[] dataField = {
@@ -542,7 +544,7 @@ public class FormBatik extends javax.swing.JFrame {
     }
 
     private void isi_tabel_dbase(){
-        String eSQieL = "INSERT INTO batik VALUES ('" +
+        String eSQieL = "INSERT INTO " + DbsTable + " VALUES ('" +
                 no_kirim.getText().toString() + "','" +
                 nama_pembeli.getText().toString() + "','" +
                 tanggal_kirim.getText().toString() + "','" +
@@ -553,7 +555,7 @@ public class FormBatik extends javax.swing.JFrame {
                 biaya_admin.getText().toString() + "','" +
                 total_biaya.getText().toString() + "')";
         try{
-            java.sql.Connection conz = ConnectTools.connect("ti412");
+            java.sql.Connection conz = ConnectTools.connect(MainDatabase);
             java.sql.PreparedStatement pst = conz.prepareStatement(eSQieL);
             pst.execute();
             JOptionPane.showMessageDialog(null,"Data Berhasil Ditambahkan");
@@ -590,7 +592,7 @@ public class FormBatik extends javax.swing.JFrame {
     }
 
     private void edit_tabel(){
-        String sqlEdit = "UPDATE batik SET " +
+        String sqlEdit = "UPDATE " + DbsTable + " SET " +
                 "no_kirim='" + no_kirim.getText().toString() + "', " +
                 "nama='" + nama_pembeli.getText().toString() + "', " +
                 "tanggal='" + tanggal_kirim.getText().toString() + "', " +
@@ -602,7 +604,7 @@ public class FormBatik extends javax.swing.JFrame {
                 "total='" + total_biaya.getText().toString() + "' " +
                 "WHERE no_kirim='" + PrimaryKey + "'";
         try{
-            java.sql.Connection conz = ConnectTools.connect("ti412");
+            java.sql.Connection conz = ConnectTools.connect(MainDatabase);
             java.sql.PreparedStatement pst = conz.prepareStatement(sqlEdit);
             pst.execute();
             JOptionPane.showMessageDialog(null,"Data Berhasil Diubah");
@@ -833,20 +835,23 @@ public class FormBatik extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_saveeditActionPerformed
 
-    private void btn_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_closeActionPerformed
+    private void btn_logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_logoutActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_btn_closeActionPerformed
+        FormLogin flog = new FormLogin();
+        flog.setVisible(true);
+        flog.setTitle("Login Aplikasi");
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_logoutActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         // TODO add your handling code here:
         int baris = tabel_form.getSelectedRow();
         PrimaryKey = tabel_form.getModel().getValueAt(baris,0).toString();
-        String sqlDelete = "DELETE FROM batik WHERE no_kirim='" + PrimaryKey + "'";
+        String sqlDelete = "DELETE FROM " + DbsTable + " WHERE no_kirim='" + PrimaryKey + "'";
         int PilihanDelete = JOptionPane.showConfirmDialog(null, "Hapus Data yang Sudah Tersimpan?", null, JOptionPane.YES_NO_OPTION);
         if(PilihanDelete == JOptionPane.YES_OPTION){
             try{
-                java.sql.Connection conz = ConnectTools.connect("ti412");
+                java.sql.Connection conz = ConnectTools.connect(MainDatabase);
                 java.sql.PreparedStatement pst = conz.prepareStatement(sqlDelete);
                 pst.execute();
                 JOptionPane.showMessageDialog(null,"Data Telah Dihapus");
@@ -892,10 +897,10 @@ public class FormBatik extends javax.swing.JFrame {
     private javax.swing.JTextField biaya_admin;
     private javax.swing.JTextField biaya_kirim;
     private javax.swing.JButton btn_cancel;
-    private javax.swing.JButton btn_close;
     private javax.swing.JButton btn_delete;
     private javax.swing.JButton btn_edit;
     private javax.swing.JButton btn_hitung;
+    private javax.swing.JButton btn_logout;
     private javax.swing.JButton btn_saveedit;
     private javax.swing.JButton btn_simpan;
     private javax.swing.ButtonGroup buttonGroup1;

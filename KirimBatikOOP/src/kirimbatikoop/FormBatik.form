@@ -586,7 +586,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btn_cancel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="btn_close" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_logout" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -596,7 +596,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btn_close" max="32767" attributes="0"/>
+                      <Component id="btn_logout" max="32767" attributes="0"/>
                       <Component id="btn_simpan" max="32767" attributes="0"/>
                       <Component id="btn_edit" max="32767" attributes="0"/>
                       <Component id="btn_delete" alignment="0" max="32767" attributes="0"/>
@@ -649,12 +649,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_cancelActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btn_close">
+        <Component class="javax.swing.JButton" name="btn_logout">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Close"/>
+            <Property name="text" type="java.lang.String" value="Logout"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_closeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_logoutActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
