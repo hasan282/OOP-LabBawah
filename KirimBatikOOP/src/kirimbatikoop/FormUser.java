@@ -9,6 +9,8 @@ public class FormUser extends javax.swing.JFrame {
     String MasterKey = "zzz";
     String MainDatabase = "ti412";
     String DbsTable = "userdata";
+    String PrimaryKey;
+    String UserName;
 
     public FormUser() {
         initComponents();
@@ -42,7 +44,7 @@ public class FormUser extends javax.swing.JFrame {
         pn_tambah = new javax.swing.JPanel();
         btn_tambah = new javax.swing.JButton();
         pn_edit = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
+        btn_edituser = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -166,6 +168,11 @@ public class FormUser extends javax.swing.JFrame {
         jLabel2.setText("Masukkan User Password");
 
         jButton1.setText("Enter");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pn_userLayout = new javax.swing.GroupLayout(pn_user);
         pn_user.setLayout(pn_userLayout);
@@ -260,7 +267,12 @@ public class FormUser extends javax.swing.JFrame {
 
         pn_edit.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton4.setText("Edit User");
+        btn_edituser.setText("Edit User");
+        btn_edituser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_edituserActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pn_editLayout = new javax.swing.GroupLayout(pn_edit);
         pn_edit.setLayout(pn_editLayout);
@@ -268,14 +280,14 @@ public class FormUser extends javax.swing.JFrame {
             pn_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_editLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4)
+                .addComponent(btn_edituser)
                 .addContainerGap())
         );
         pn_editLayout.setVerticalGroup(
             pn_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pn_editLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton4)
+                .addComponent(btn_edituser)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -301,9 +313,7 @@ public class FormUser extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -315,8 +325,8 @@ public class FormUser extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pn_tambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pn_edit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(pn_edit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -351,6 +361,27 @@ public class FormUser extends javax.swing.JFrame {
         }catch(Exception e){}
     }
 
+    private void Identifikasi(int baris){
+        PrimaryKey = tabel_user.getModel().getValueAt(baris,0).toString();
+        UserName = tabel_user.getModel().getValueAt(baris,1).toString();
+        
+        String Ident = "SELECT * FROM " + DbsTable + " WHERE user_name='" +
+                UserName + "' AND password='" +
+                Encryptorz.enkrip(pass_user.getText().toString()) +"'";
+        try{
+            java.sql.Connection conz = ConnectTools.connect(MainDatabase);
+            java.sql.ResultSet res = conz.createStatement().executeQuery(Ident);
+            while(res.next()){
+                ClearPanel();
+                pn_input.setVisible(true);
+                pn_edit.setVisible(true);
+                in_username.setText(UserName);
+                in_password.setText(null);
+                return;
+            }JOptionPane.showMessageDialog(null, "Password Tidak Sesuai");
+        }catch(Exception e){}
+    }
+
     private void TambahUser(){
         String sqlTambah = "INSERT INTO " + DbsTable + " VALUES (NULL,'" +
                 in_username.getText().toString() + "','" +
@@ -361,6 +392,15 @@ public class FormUser extends javax.swing.JFrame {
             pst.execute();
             JOptionPane.showMessageDialog(null,"User Berhasil Ditambahkan");
         }catch(Exception e){}
+    }
+
+    private void EditUser(){
+        String sqlEdit = "UPDATE " + DbsTable + " SET user_name='" +
+                "', password='" +
+                "' WHERE user_id='" +
+                "'";
+        
+        
     }
 
     private void btn_tambahkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahkanActionPerformed
@@ -386,6 +426,8 @@ public class FormUser extends javax.swing.JFrame {
                     ClearPanel();
                     pn_input.setVisible(true);
                     pn_tambah.setVisible(true);
+                    in_username.setText(null);
+                    in_password.setText(null);
                 }
             }
         }
@@ -415,6 +457,16 @@ public class FormUser extends javax.swing.JFrame {
         flog.setTitle("Login Aplikasi");
         this.setVisible(false);
     }//GEN-LAST:event_btn_backActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Identifikasi(tabel_user.getSelectedRow());
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_edituserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edituserActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btn_edituserActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -449,12 +501,12 @@ public class FormUser extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_back;
     private javax.swing.JButton btn_edit;
+    private javax.swing.JButton btn_edituser;
     private javax.swing.JButton btn_tambah;
     private javax.swing.JButton btn_tambahkan;
     private javax.swing.JTextField in_password;
     private javax.swing.JTextField in_username;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
