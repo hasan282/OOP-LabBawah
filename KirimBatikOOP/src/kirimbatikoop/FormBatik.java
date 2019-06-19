@@ -7,8 +7,8 @@ public class FormBatik extends javax.swing.JFrame {
     
     DefaultTableModel mdl = new DefaultTableModel();
     String PrimaryKey;
-    String MainDatabase = "ti412";
-    String DbsTable = "batik";
+    String MainDatabase = "internal";
+    String DbsTable = "orders";
 
     public FormBatik() {
         initComponents();

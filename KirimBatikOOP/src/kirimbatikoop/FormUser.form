@@ -44,8 +44,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="pn_master" min="-2" max="-2" attributes="0"/>
@@ -92,8 +92,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="469" max="32767" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="btn_back" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -402,8 +402,12 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btn_delete" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="btn_edituser" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -412,7 +416,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btn_edituser" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btn_edituser" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_delete" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -425,6 +433,22 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_edituserActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btn_delete">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Delete User"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_deleteActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cancel"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -23,19 +23,37 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panel_dua" max="32767" attributes="0"/>
-          <Component id="panel_satu" max="32767" attributes="0"/>
-          <Component id="panel_tiga" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="panel_satu" max="32767" attributes="0"/>
+                  <Component id="panel_tiga" alignment="0" max="32767" attributes="0"/>
+                  <Component id="panel_dua" alignment="0" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="panel_dua" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="panel_satu" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="panel_tiga" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="panel_dua" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="panel_satu" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="panel_tiga" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="jPanel2" max="32767" attributes="0"/>
+                  <Component id="jPanel1" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -51,24 +69,23 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="61" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="user_name" alignment="0" max="32767" attributes="0"/>
-                      <Component id="user_pass" max="32767" attributes="0"/>
+                      <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="btn_enter" min="-2" pref="153" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btn_x" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="80" max="32767" attributes="0"/>
                       </Group>
+                      <Component id="user_name" alignment="0" max="32767" attributes="0"/>
+                      <Component id="user_pass" min="-2" pref="303" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -77,29 +94,25 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="user_name" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="user_name" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="user_pass" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="user_pass" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btn_enter" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_x" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="16" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="user_name">
-        </Component>
-        <Component class="javax.swing.JPasswordField" name="user_pass">
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="text" type="java.lang.String" value="User Name"/>
@@ -109,6 +122,10 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Password"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="user_name">
+        </Component>
+        <Component class="javax.swing.JPasswordField" name="user_pass">
         </Component>
         <Component class="javax.swing.JButton" name="btn_enter">
           <Properties>
@@ -150,7 +167,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_user" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="19" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -176,10 +193,10 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btn_login" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="btn_login" min="-2" pref="154" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="153" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -203,6 +220,46 @@
           </Events>
         </Component>
       </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="jPanel1">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="15" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+    </Container>
+    <Container class="javax.swing.JPanel" name="jPanel2">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="15" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
     </Container>
   </SubComponents>
 </Form>
